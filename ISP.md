@@ -1,14 +1,15 @@
 # Table of Contents
 - [ISP](#isp)
 - [AWB](#awb)
+- [Demosaicing](#demosaicing)
+    - [Deep Learning Methods](#deep-learning-methods)
+    - [Traditional Methods](#traditional-methods)
 - [Misc](#misc)
+- [Resources](#resources)
+- [Articles](#articles)
 
 
 ## ISP
-- **Make the Most Out of Your Net: Alternating Between Canonical and Hard Datasets for Improved Image Demosaicing** <Br>
-Yuval Becker, Raz Z. Nossek, Tomer Peleg <Br>
-[arXiv 2303] <Br>
-
 - **Transform your Smartphone into a DSLR Camera: Learning the ISP in the Wild** <Br>
 Ardhendu Shekhar Tripathi, [Martin Danelljan](https://martin-danelljan.github.io/), Samarth Shukla, [Radu Timofte](http://people.ee.ethz.ch/~timofter/), [Luc Van Gool](https://ee.ethz.ch/the-department/faculty/professors/person-detail.OTAyMzM=.TGlzdC80MTEsMTA1ODA0MjU5.html) <Br>
 [ECCV 2022] [[Code](https://github.com/4rdhendu/TransformPhone2DSLR)] <Br>
@@ -73,16 +74,6 @@ Andrey Ignatov, Luc Van Gool, Radu Timofte  <Br>
 [CVPR 2020] [[Code](https://github.com/aiff22/pynet)] <Br>
 [**PyNet**] [★] 1) 提出了一个端到端的深度学习网络, 用以代替现有的ISP处理流程. 2) 提出了一个华为P20 RAW 和Canon 5D的RAW-RGB图像对, 用以训练ISP模型. 3) 提出的算法与自带的ISP流程相比, 色彩上有一定提升, 但没有明显优势, 且存在晕影. 另外速度也是个问题. 因此对于用一个DL模型代替ISP流程的方案可行性还是有待确认. <Br>
 
-- **Rethinking Learning-based Demosaicing, Denoising, and Super-Resolution Pipeline**  <Br>
-[Guocheng Qian](https://guochengqian.github.io/), Yuanhao Wang, [Jinjin Gu](http://www.jasongt.com/), [Chao Dong](http://xpixel.group/2010/01/20/chaodong.html), [Wolfgang Heidrich](https://vccimaging.org/People/heidriw/), [Bernard Ghanem](https://www.bernardghanem.com/), [Jimmy S. Ren](http://www.jimmyren.com/) <Br>
-[ICCP 2022] [[Pytorch-Code](https://github.com/guochengqian/TENet)] <Br>
-[**TENet**] [★] 1. 使用具有pixel shift技术的相机收集了一可以做demoasic的数据集, 避免了用普通RGB数据做真值时内置demoasic过程带来的误差. 2. 提出了一端到端的demosaic, 去噪和超分的网络, 采用residual + dense block的形式, 没什么特别的
-
-- **End-to-End Learning for Joint Image Demosaicing, Denoising and Super-Resolution**  <Br>
-Wenzhu Xing, [Karen Egiazarian](https://www.tuni.fi/en/karen-eguiazarian) <Br>
-[CVPR 2021] [[Pytorch-Code](https://github.com/xingwz/End-to-End-JDNDMSR)] <Br>
-[★] 一个网络联合做demosaic, 去噪和超分, 退化很简单, 没在真实数据上实验.
-
 - **Generating Training Data for Denoising Real RGB Images via Camera Pipeline Simulation**  <Br>
 [Ronnachai Jaroensri](http://people.csail.mit.edu/tiam/), Camille Biscarrat, [Miika Aittala](https://people.csail.mit.edu/miika/), [Frédo Durand](https://people.csail.mit.edu/fredo/) <Br>
 [arXiv 1904] [[Project](http://people.csail.mit.edu/tiam/camera_sim/)] [[Pytorch-Code](https://github.com/12dmodel/camera_sim)] <Br>
@@ -111,8 +102,7 @@ Haomiao Jiang, Qiyuan Tian, [Joyce Farrell](https://web.stanford.edu/group/scien
 - **A Software Platform for Manipulating the Camera Imaging Pipeline**  <Br>
 [Hakki Can Karaimer](https://karaimer.github.io/), [Michael S. Brown](http://www.cse.yorku.ca/~mbrown/) <Br>
 [CVPR 2016] [[Project](https://karaimer.github.io/camera-pipeline/)]  <Br> 
-  
- 
+
   
 
 # AWB
@@ -155,10 +145,67 @@ Haomiao Jiang, Qiyuan Tian, [Joyce Farrell](https://web.stanford.edu/group/scien
 [★★]
 
 
+# Demosaicing
+## Deep Learning Methods
+- **Make the Most Out of Your Net: Alternating Between Canonical and Hard Datasets for Improved Image Demosaicing** <Br>
+Yuval Becker, Raz Z. Nossek, Tomer Peleg <Br>
+[arXiv 2303] <Br>
+[★] samsung以色列研究院的文章, 提出了一个训练demosaicing的策略: 1) 先用普通数据集训练网络, 根据指标挑出难样本; 2) 将难样本与全部数据交替训练. 在RGB域做的
 
+- **Rethinking Learning-based Demosaicing, Denoising, and Super-Resolution Pipeline**  <Br>
+[Guocheng Qian](https://guochengqian.github.io/), Yuanhao Wang, [Jinjin Gu](http://www.jasongt.com/), [Chao Dong](http://xpixel.group/2010/01/20/chaodong.html), [Wolfgang Heidrich](https://vccimaging.org/People/heidriw/), [Bernard Ghanem](https://www.bernardghanem.com/), [Jimmy S. Ren](http://www.jimmyren.com/) <Br>
+[ICCP 2022] [[Pytorch-Code](https://github.com/guochengqian/TENet)] <Br>
+[**TENet**] [★★] 1. 使用具有pixel shift技术的相机收集了一可以做demoasic的数据集, 避免了用普通RGB数据做真值时内置demoasic过程带来的误差. 2. 提出了一端到端的demosaic, 去噪和超分的网络, 采用residual + dense block的形式, 没什么特别的
+
+- **Searching for Fast Demosaicking Algorithms**  <Br>
+[Karima Ma](https://people.csail.mit.edu/karima/home.html), [Michael Gharbi](http://www.mgharbi.com/), Andrew Adams, [Shoaib Kamil](http://people.csail.mit.edu/skamil/), [Tzu-Mao Li](https://cseweb.ucsd.edu/~tzli/), [Connelly Barnes](http://www.connellybarnes.com/work/), [Jonathan Ragan-Kelley](https://people.csail.mit.edu/jrk/) <Br>
+[TOG 2022] <Br>
+NAS搜索demosacing网络结构
+
+- **End-to-End Learning for Joint Image Demosaicing, Denoising and Super-Resolution**  <Br>
+Wenzhu Xing, [Karen Egiazarian](https://www.tuni.fi/en/karen-eguiazarian) <Br>
+[CVPR 2021] [[Pytorch-Code](https://github.com/xingwz/End-to-End-JDNDMSR)] <Br>
+[★] 一个网络联合做demosaic, 去噪和超分, 退化很简单, 没在真实数据上实验.
+
+- **A Compact High-Quality Image Demosaicking Neural Network for Edge-Computing Devices**  <Br>
+Shuyu Wang, [Mingxin Zhao](https://jackgittes.github.io/), Runjiang Dou, Shuangming Yu, Liyuan Liu, Nanjian Wu <Br>
+[Sensor 2021] <Br>
+[★]
+
+- **HighEr-Resolution Network for Image Demosaicing and Enhancing**  <Br>
+[Kangfu Mei](https://kfmei.page/), [Juncheng Li](https://junchenglee.com/), Jiajie Zhang, Haoyu Wu, Jie Li, Rui Huang <Br>
+[ICCVW 2019] [[Pytorch-Code](https://github.com/MKFMIKU/RAW2RGBNet)] <Br>
+[★]
+
+- **Deep Joint Demosaicking and Denoising**  <Br>
+[Michaël Gharbi](http://www.mgharbi.com/), [Gaurav Chaurasia](https://gchauras.github.io/), [Sylvain Paris](http://people.csail.mit.edu/sparis/), [Frédo Durand](http://people.csail.mit.edu/fredo/) <Br>
+[SIGGRAPH Asia 2016] [[Project](https://groups.csail.mit.edu/graphics/demosaicnet/)] [[Pytorch-Code](https://github.com/mgharbi/demosaicnet)] <Br>
+[★★] sRGB域用CNN端到端demosaicing, 重点是提出了难样本挖掘的策略, 用HDR-VDP2找到亮度上的artifact, 用频域上低频分量的增益找到moire artifact.
+
+## Traditional Methods
+- **Adaptive homogeneity-directed demosaicing algorithm**  <Br>
+K Hirakawa, TW Parks <Br>
+[TIP 2005] <Br>
+[**AHD**] [★★]
 
 # Misc
 - **Improving Color Reproduction Accuracy on Cameras** <Br>
 [Thomas Eboli](https://teboli.github.io/), [Jean-Michel Morel](https://sites.google.com/site/jeanmichelmorelcmlaenscachan/), [Gabriele Facciolo](http://dev.ipol.im/~facciolo/) <Br>
 [ECCV 2022] [[Project](https://teboli.github.io/fast_optical.html)] [[Pytorch-Code](https://github.com/teboli/fast_two_stage_psf_correction)] <Br> 
 
+- **Optical aberrations Correction in Postprocessing using Imaging Simulation** <Br>
+Shiqi Chen, Huajun Feng, Dexin Pan, Zhihai Xu, Qi Li, Yueting Chen <Br>
+[TOG 2021]<Br> 
+
+- **Removing chromatic aberration by digital image processing** <Br>
+SW Chung, BK Kim, WJ Song <Br>
+[Optical Engineering 2010] [[Unofficial-Cpp-Code](https://github.com/RayXie29/Chromatic_aberration_correction)]<Br> 
+[★★] (传统算法) 首先归纳了正常无color fringe的边缘过渡区域的性质, 即: 过渡区域的色差值(R-G, B-G)在过渡区域边缘色差值的范围内; 接下来先根据G找到边缘p, 在p附近根据梯度相似原则找到过渡区域边界lp和rp; 最后根据前面归纳的边缘性质, 去除过渡区域的色差
+
+# Resources
+- [Demosaic Codes](https://github.com/colour-science/colour-demosaicing)
+- [Unpurple](https://github.com/mjambon/purple-fringe)
+
+# Articles
+- [色差(Chromatic aberration)产生原理及去除](https://zhuanlan.zhihu.com/p/586260501)
+- [光学原理回顾：光学系統中重要的参数（四.色差·像差形式)](https://zhuanlan.zhihu.com/p/361330310)
